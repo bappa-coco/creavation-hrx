@@ -18,11 +18,14 @@ import {
   Container,
 } from "@mui/material";
 import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,13 +33,18 @@ const LoginPage: React.FC = () => {
       alert("Please enter both username and password.");
       return;
     }
-    alert(`Logged in as ${username}`);
+
+    // Example: hardcoded login check
+    if (username === "admin" && password === "admin") {
+      navigate("/dashboard");
+    } else {
+      alert("Invalid credentials");
+    }
   };
 
   return (
     <>
       <CssBaseline />
-
       {/* Header */}
       <AppBar position="static" sx={{ bgcolor: "success.main" }}>
         <Toolbar>
@@ -49,14 +57,13 @@ const LoginPage: React.FC = () => {
         </Toolbar>
       </AppBar>
 
-      {/* Main Content */}
+      {/* Main */}
       <Grid
         container
         component="main"
         sx={{
-          height: "calc(100vh - 112px)", // subtract header & footer height
-          background:
-            "linear-gradient(135deg, #e8f5e9 30%, #f1f8e9 90%)",
+          height: "calc(100vh - 112px)",
+          background: "linear-gradient(135deg, #e8f5e9 30%, #f1f8e9 90%)",
         }}
         justifyContent="center"
         alignItems="center"
@@ -86,7 +93,6 @@ const LoginPage: React.FC = () => {
               onSubmit={handleSubmit}
               sx={{ mt: 3, width: "100%" }}
             >
-              {/* Username */}
               <TextField
                 margin="normal"
                 required
@@ -96,13 +102,7 @@ const LoginPage: React.FC = () => {
                 onChange={(e) => setUsername(e.target.value)}
               />
 
-              {/* Password */}
-              <FormControl
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                required
-              >
+              <FormControl variant="outlined" margin="normal" fullWidth required>
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <OutlinedInput
                   id="password"
@@ -123,7 +123,6 @@ const LoginPage: React.FC = () => {
                 />
               </FormControl>
 
-              {/* Login Button */}
               <Button
                 type="submit"
                 fullWidth
@@ -133,22 +132,6 @@ const LoginPage: React.FC = () => {
               >
                 Login
               </Button>
-
-              {/* Forgot Password */}
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                align="center"
-                sx={{
-                  cursor: "pointer",
-                  "&:hover": {
-                    textDecoration: "underline",
-                    color: "success.main",
-                  },
-                }}
-              >
-                Forgot password?
-              </Typography>
             </Box>
           </Paper>
         </Grid>
@@ -166,9 +149,8 @@ const LoginPage: React.FC = () => {
       >
         <Container maxWidth="md">
           <Typography variant="body2">
-            Developed by Creavation LLP (I) Pvt. Ltd. (2022-2025) | CVHR
-            - CreavationPayroll is a registered trademark of Creavation LLP India
-            Pvt. Ltd.
+            Developed by Spine Technologies (I) Pvt. Ltd. (2001-2025) | SpineHR -
+            SpinePayroll is a registered trademark of Spine Technologies India Pvt. Ltd.
           </Typography>
         </Container>
       </Box>
