@@ -1,116 +1,178 @@
 import React, { useState } from "react";
+import {
+  Avatar,
+  Box,
+  Button,
+  CssBaseline,
+  FormControl,
+  Grid,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Paper,
+  TextField,
+  Typography,
+  AppBar,
+  Toolbar,
+  Container,
+} from "@mui/material";
+import { Lock, Visibility, VisibilityOff } from "@mui/icons-material";
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Username:", username, "Password:", password);
+    if (!username || !password) {
+      alert("Please enter both username and password.");
+      return;
+    }
+    alert(`Logged in as ${username}`);
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
+      <CssBaseline />
+
       {/* Header */}
-      <header className="bg-green-600 text-white py-4 text-center font-semibold text-lg">
-        CREAVATION LLP
-      </header>
+      <AppBar position="static" sx={{ bgcolor: "success.main" }}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            sx={{ flexGrow: 1, fontWeight: 600, letterSpacing: 1 }}
+          >
+            CREAVATION LLP
+          </Typography>
+        </Toolbar>
+      </AppBar>
 
-      {/* Main Section */}
-      <main className="flex flex-1 flex-col md:flex-row items-center justify-center p-6 bg-gray-50">
-        {/* Left Illustration */}
-        <div className="hidden md:flex flex-1 justify-center items-center">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/4149/4149670.png"
-            alt="Illustration"
-            className="max-w-md w-full h-auto"
-          />
-        </div>
+      {/* Main Content */}
+      <Grid
+        container
+        component="main"
+        sx={{
+          height: "calc(100vh - 112px)", // subtract header & footer height
+          background:
+            "linear-gradient(135deg, #e8f5e9 30%, #f1f8e9 90%)",
+        }}
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Grid item xs={12} sm={8} md={5}>
+          <Paper
+            elevation={8}
+            square={false}
+            sx={{
+              borderRadius: 3,
+              p: 4,
+              m: 2,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "success.main" }}>
+              <Lock />
+            </Avatar>
+            <Typography component="h1" variant="h5" sx={{ fontWeight: 600 }}>
+              Login
+            </Typography>
 
-        {/* Right Login Box */}
-        <div className="w-full md:w-1/3 bg-white shadow-lg rounded-xl p-8">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Login</h2>
-
-          <form onSubmit={handleSubmit}>
-            {/* Company */}
-            <div className="mb-4">
-              <label className="block text-sm text-gray-600 mb-1">Company</label>
-              <input
-                type="text"
-                value="CREAVA"
-                disabled
-                className="w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-700"
-              />
-            </div>
-
-            {/* Login As */}
-            <div className="mb-4">
-              <label className="block text-sm text-gray-600 mb-1">Login As</label>
-              <input
-                type="text"
-                value="User"
-                disabled
-                className="w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-700"
-              />
-            </div>
-
-            {/* Username */}
-            <div className="mb-4">
-              <label className="block text-sm text-gray-600 mb-1">
-                User Name *
-              </label>
-              <input
-                type="text"
-                placeholder="Enter your username"
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              sx={{ mt: 3, width: "100%" }}
+            >
+              {/* Username */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-400"
-                required
               />
-            </div>
 
-            {/* Password */}
-            <div className="mb-6">
-              <label className="block text-sm text-gray-600 mb-1">
-                Password *
-              </label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-400"
+              {/* Password */}
+              <FormControl
+                variant="outlined"
+                margin="normal"
+                fullWidth
                 required
-              />
-            </div>
+              >
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <OutlinedInput
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
 
-            {/* Login Button */}
-            <button
-              type="submit"
-              className="w-full bg-green-500 text-white py-2 rounded-lg font-medium hover:bg-green-600 transition"
-            >
-              Login
-            </button>
-          </form>
+              {/* Login Button */}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="success"
+                sx={{ mt: 3, mb: 2, py: 1.3, fontWeight: 600 }}
+              >
+                Login
+              </Button>
 
-          {/* Forgot Password */}
-          <div className="mt-4 text-center">
-            <a href="#" className="text-sm text-green-600 hover:underline">
-              Forgot password?
-            </a>
-          </div>
-        </div>
-      </main>
+              {/* Forgot Password */}
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                align="center"
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": {
+                    textDecoration: "underline",
+                    color: "success.main",
+                  },
+                }}
+              >
+                Forgot password?
+              </Typography>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
 
       {/* Footer */}
-      <footer className="bg-green-600 text-white text-xs py-2 px-4 text-center">
-        Developed by Creavation LLP (I) Pvt. Ltd. (2001-2025) | SpineHRX-SpinePayroll
-        <br />
-        <a href="#" className="underline">User Agreement</a> |{" "}
-        <a href="#" className="underline">Privacy Policy</a> |{" "}
-        <a href="#" className="underline">Disclaimer</a>
-      </footer>
-    </div>
+      <Box
+        component="footer"
+        sx={{
+          bgcolor: "success.main",
+          py: 2,
+          textAlign: "center",
+          color: "white",
+        }}
+      >
+        <Container maxWidth="md">
+          <Typography variant="body2">
+            Developed by Creavation LLP (I) Pvt. Ltd. (2022-2025) | CVHR
+            - CreavationPayroll is a registered trademark of Creavation LLP India
+            Pvt. Ltd.
+          </Typography>
+        </Container>
+      </Box>
+    </>
   );
 };
 
