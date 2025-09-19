@@ -9,10 +9,15 @@ import {
   Typography,
   Divider,
   Paper,
+  MenuList,
+  MenuItem,
 } from "@mui/material";
-import { AccessTime } from "@mui/icons-material";
+import { ContentCopy, ContentPaste } from "@mui/icons-material";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import { useNavigate } from "react-router-dom";
 
 // Sample Data
 const employees = [
@@ -25,6 +30,7 @@ const drawerWidth = 240;
 const Dashboard = () => {
   const [time, setTime] = useState(new Date());
   const [quote, setQuote] = useState("");
+  const navigate = useNavigate();
 
   // Update Clock
   useEffect(() => {
@@ -74,30 +80,31 @@ const Dashboard = () => {
           </Typography>
         </Box>
         <Divider sx={{ bgcolor: "white" }} />
-        <List>
-          <ListItem button>
-            <ListItemIcon sx={{ color: "white" }}>
-              <AccessTime />
+        <MenuList>
+          <MenuItem onClick={() => navigate("/admin")}>
+            <ListItemIcon>
+              <PersonOutlineIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Admin" />
-          </ListItem>
+            <ListItemText>Admin</ListItemText>
+            <KeyboardDoubleArrowRightIcon />
+          </MenuItem>
 
-          <ListItem button>
-            <ListItemIcon sx={{ color: "white" }}>
-              <AccessTime />
+          <MenuItem onClick={() => navigate("/leave")}>
+            <ListItemIcon>
+              <ContentCopy fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Leave" />
-          </ListItem>
+            <ListItemText>Leave</ListItemText>
+            <KeyboardDoubleArrowRightIcon />
+          </MenuItem>
 
-          <ListItem button>
-            <ListItemIcon sx={{ color: "white" }}>
-              <AccessTime />
+          <MenuItem onClick={() => navigate("/time")}>
+            <ListItemIcon>
+              <ContentPaste fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Time" />
-          </ListItem>
-
-          {/* Add more navigation items if needed */}
-        </List>
+            <ListItemText>Time</ListItemText>
+            <KeyboardDoubleArrowRightIcon />
+          </MenuItem>
+        </MenuList>
       </Drawer>
 
       {/* Main Content Area */}
